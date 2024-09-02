@@ -6,6 +6,7 @@ import 'core/config/router.dart';
 import 'core/config/themes.dart';
 import 'core/db/db.dart';
 import 'core/utils.dart';
+import 'features/activities/bloc/filter_bloc.dart';
 import 'features/home/bloc/home_bloc.dart';
 import 'features/income/bloc/income_bloc.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => IncomeBloc()),
+        BlocProvider(create: (context) => FilterBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

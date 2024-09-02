@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/config/app_colors.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/texts/text_r.dart';
+import '../../income/bloc/income_bloc.dart';
+import '../bloc/filter_bloc.dart';
+import '../widget/bar_chart_widget.dart';
 
 class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({super.key});
@@ -18,12 +22,22 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
     setState(() {
       if (title == 'Day') {
         tabIndex = 1;
+        context.read<FilterBloc>().add(FilterDataEvent('Day'));
       } else if (title == 'Week') {
         tabIndex = 2;
+        context.read<FilterBloc>().add(FilterDataEvent('Week'));
       } else {
         tabIndex = 3;
+        context.read<FilterBloc>().add(FilterDataEvent('Month'));
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    var read = context.read<FilterBloc>();
+    read.add(FilterDataEvent('Day'));
   }
 
   @override
@@ -64,13 +78,28 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         Expanded(
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: const [
-              SizedBox(height: 15),
-              _BarChart(),
-              SizedBox(height: 25),
-              _TotalAmount(),
-              SizedBox(height: 25),
-              _IncomeExpenseCard(),
+            children: [
+              const SizedBox(height: 15),
+              const _BarChart(),
+              const SizedBox(height: 25),
+              BlocBuilder<IncomeBloc, IncomeState>(
+                builder: (context, state) {
+                  if (state is IncomeLoadedState) {
+                    return Column(
+                      children: [
+                        _TotalAmount(state.incomeAmount - state.expenseAmount),
+                        const SizedBox(height: 25),
+                        _IncomeExpenseCard(
+                          expense: state.expenseAmount,
+                          income: state.incomeAmount,
+                        ),
+                      ],
+                    );
+                  }
+
+                  return Container();
+                },
+              ),
             ],
           ),
         ),
@@ -130,12 +159,15 @@ class _BarChart extends StatelessWidget {
         color: AppColors.main,
         borderRadius: BorderRadius.circular(10),
       ),
+      child: BarChartWidget(),
     );
   }
 }
 
 class _TotalAmount extends StatelessWidget {
-  const _TotalAmount();
+  const _TotalAmount(this.income);
+
+  final int income;
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +186,8 @@ class _TotalAmount extends StatelessWidget {
             color: AppColors.white50,
           ),
           const Spacer(),
-          const TextM(
-            '\$6500', // change this
+          TextM(
+            '\$$income',
             fontSize: 16,
           ),
         ],
@@ -165,13 +197,15 @@ class _TotalAmount extends StatelessWidget {
 }
 
 class _IncomeExpenseCard extends StatelessWidget {
-  const _IncomeExpenseCard();
+  const _IncomeExpenseCard({required this.expense, required this.income});
+
+  final int income;
+  final int expense;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 113,
-      // padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.navbar,
         borderRadius: BorderRadius.circular(10),
@@ -198,8 +232,8 @@ class _IncomeExpenseCard extends StatelessWidget {
                   color: AppColors.white50,
                 ),
                 const Spacer(),
-                const TextM(
-                  '\$6500', // change this
+                TextM(
+                  '\$$income',
                   fontSize: 16,
                 ),
                 const SizedBox(width: 16),
@@ -230,8 +264,8 @@ class _IncomeExpenseCard extends StatelessWidget {
                   color: AppColors.white50,
                 ),
                 const Spacer(),
-                const TextM(
-                  '\$6500', // change this
+                TextM(
+                  '\$$expense',
                   fontSize: 16,
                 ),
                 const SizedBox(width: 16),
