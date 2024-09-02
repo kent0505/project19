@@ -16,31 +16,45 @@ class SheetAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        const SizedBox(width: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: TextB(
-            isIncome ? '$title Income' : '$title Expense',
-            fontSize: 32,
+        const SizedBox(height: 6),
+        Container(
+          height: 5,
+          width: 36,
+          decoration: BoxDecoration(
+            color: AppColors.white8,
+            borderRadius: BorderRadius.circular(3),
           ),
         ),
-        const Spacer(),
-        CupertinoButton(
-          onPressed: () {
-            context.pop();
-          },
-          padding: EdgeInsets.zero,
-          minSize: 20,
-          child: const TextM(
-            'Close',
-            fontSize: 16,
-            color: AppColors.green,
-          ),
+        const SizedBox(height: 3),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 23),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: TextB(
+                isIncome ? '$title Income' : '$title Expense',
+                fontSize: 32,
+              ),
+            ),
+            const Spacer(),
+            CupertinoButton(
+              onPressed: () {
+                context.pop();
+              },
+              padding: EdgeInsets.zero,
+              minSize: 20,
+              child: const TextM(
+                'Close',
+                fontSize: 16,
+                color: AppColors.green,
+              ),
+            ),
+            const SizedBox(width: 23),
+          ],
         ),
-        const SizedBox(width: 8),
       ],
     );
   }

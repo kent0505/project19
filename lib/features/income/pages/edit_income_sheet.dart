@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project19/core/widgets/dialogs/delete_dialog.dart';
 
-import '../../../core/models/test_model.dart';
 import '../../../core/utils.dart';
+import '../../../core/models/test_model.dart';
 import '../../../core/config/app_colors.dart';
 import '../../../core/widgets/buttons/primary_button.dart';
+import '../../../core/widgets/dialogs/delete_dialog.dart';
 import '../../../core/widgets/textfields/txt_field.dart';
 import '../../../core/widgets/texts/text_r.dart';
 import '../bloc/income_bloc.dart';
@@ -100,7 +99,6 @@ class _EditIncomeSheetState extends State<EditIncomeSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.black.withOpacity(0.75),
         boxShadow: [
@@ -114,7 +112,6 @@ class _EditIncomeSheetState extends State<EditIncomeSheet> {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 14),
           SheetAppbar(
             isIncome: widget.income.isIncome,
             title: 'Edit',
@@ -122,6 +119,7 @@ class _EditIncomeSheetState extends State<EditIncomeSheet> {
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 const SizedBox(height: 8),
                 TextM(

@@ -73,7 +73,6 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.black.withOpacity(0.75),
         boxShadow: [
@@ -87,11 +86,11 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 14),
           SheetAppbar(isIncome: widget.isIncome),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 const SizedBox(height: 8),
                 TextM(
