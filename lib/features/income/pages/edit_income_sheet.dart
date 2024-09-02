@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/utils.dart';
-import '../../../core/models/test_model.dart';
+import '../../../core/models/income.dart';
 import '../../../core/config/app_colors.dart';
 import '../../../core/widgets/buttons/primary_button.dart';
 import '../../../core/widgets/dialogs/delete_dialog.dart';
@@ -116,12 +116,11 @@ class _EditIncomeSheetState extends State<EditIncomeSheet> {
             isIncome: widget.income.isIncome,
             title: 'Edit',
           ),
-          const SizedBox(height: 8),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 TextM(
                   'Title',
                   fontSize: 16,

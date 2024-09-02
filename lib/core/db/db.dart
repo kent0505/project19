@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../models/test_model.dart';
+import '../models/income.dart';
 
 String boxName = 'incomebox19';
 List<Income> incomesList = [];

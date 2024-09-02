@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project19/core/models/news.dart';
+import 'package:project19/features/home/widgets/home_news_card.dart';
 
 import '../../../core/utils.dart';
 import '../../../core/widgets/custom_scaffold.dart';
@@ -58,48 +60,54 @@ class _HomeState extends State<_Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          SizedBox(height: 12 + getStatusBar(context)),
-          const StatisticsCard(),
-          const SizedBox(height: 12),
-          const Row(
-            children: [
-              HomeAddButton(isIncome: true),
-              SizedBox(width: 45),
-              HomeAddButton(isIncome: false),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              HomeTabButton(
-                title: 'News',
-                active: !history,
-                value: false,
-                onPressed: changeTab,
-              ),
-              const SizedBox(width: 45),
-              HomeTabButton(
-                title: 'History',
-                active: history,
-                value: true,
-                onPressed: changeTab,
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          if (history)
-            BlocBuilder<IncomeBloc, IncomeState>(
-              builder: (context, state) {
-                if (state is IncomeLoadedState) {
-                  if (state.incomes.isEmpty) return const NoData();
+    return Column(
+      children: [
+        SizedBox(height: 12 + getStatusBar(context)),
+        const StatisticsCard(),
+        const SizedBox(height: 12),
+        const Row(
+          children: [
+            SizedBox(width: 16),
+            HomeAddButton(isIncome: true),
+            SizedBox(width: 45),
+            HomeAddButton(isIncome: false),
+            SizedBox(width: 16),
+          ],
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const SizedBox(width: 16),
+            HomeTabButton(
+              title: 'News',
+              active: !history,
+              value: false,
+              onPressed: changeTab,
+            ),
+            const SizedBox(width: 45),
+            HomeTabButton(
+              title: 'History',
+              active: history,
+              value: true,
+              onPressed: changeTab,
+            ),
+            const SizedBox(width: 16),
+          ],
+        ),
+        const SizedBox(height: 8),
+        if (history)
+          BlocBuilder<IncomeBloc, IncomeState>(
+            builder: (context, state) {
+              if (state is IncomeLoadedState) {
+                if (state.incomes.isEmpty) return const NoData();
 
-                  return Expanded(
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: navBarHeight),
                     child: ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       children: [
+                        const SizedBox(height: 8),
                         ...List.generate(
                           state.incomes.length,
                           (index) {
@@ -110,20 +118,32 @@ class _HomeState extends State<_Home> {
                         ),
                       ],
                     ),
-                  );
-                }
+                  ),
+                );
+              }
 
-                return Container();
-              },
-            )
-          else
-            Expanded(
+              return Container();
+            },
+          )
+        else
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: navBarHeight),
               child: ListView(
-                children: const [],
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                children: [
+                  const SizedBox(height: 8),
+                  ...List.generate(
+                    newsList.length,
+                    (index) {
+                      return HomeNewsCard(news: newsList[index]);
+                    },
+                  ),
+                ],
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

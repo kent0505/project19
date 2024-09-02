@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/models/test_model.dart';
+import '../../../core/models/income.dart';
 import '../../../core/utils.dart';
 import '../../../core/config/app_colors.dart';
 import '../../../core/widgets/buttons/primary_button.dart';
@@ -87,12 +87,11 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
       child: Column(
         children: [
           SheetAppbar(isIncome: widget.isIncome),
-          const SizedBox(height: 8),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 TextM(
                   'Title',
                   fontSize: 16,

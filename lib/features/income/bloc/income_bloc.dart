@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/db/db.dart';
-import '../../../core/models/test_model.dart';
+import '../../../core/models/income.dart';
 import '../../../core/utils.dart';
 
 part 'income_event.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/config/app_colors.dart';
-import '../../../core/models/test_model.dart';
+import '../../../core/models/income.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/texts/text_r.dart';
 import '../../income/pages/edit_income_sheet.dart';
