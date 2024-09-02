@@ -46,3 +46,19 @@ void precacheImages(BuildContext context) {
     precacheImage(AssetImage(assets), context);
   }
 }
+
+String getCategoryAsset(String cat) {
+  if (cat == 'Business') return 'assets/cat1.svg';
+  if (cat == 'Salary') return 'assets/cat2.svg';
+  if (cat == 'Dividends') return 'assets/cat3.svg';
+  if (cat == 'Investment') return 'assets/cat4.svg';
+  if (cat == 'Rent') return 'assets/cat5.svg';
+  if (cat == 'Freelance') return 'assets/cat6.svg';
+  if (cat == 'Royalty') return 'assets/cat7.svg';
+  if (cat == 'Procurement') return 'assets/cat8.svg';
+  if (cat == 'Food') return 'assets/cat9.svg';
+  if (cat == 'Transport') return 'assets/cat10.svg';
+  if (cat == 'Rest') return 'assets/cat11.svg';
+  if (cat == 'Investment') return 'assets/cat12.svg';
+  return 'assets/cat1.svg';
+}

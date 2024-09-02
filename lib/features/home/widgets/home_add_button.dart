@@ -6,9 +6,9 @@ import '../../../core/widgets/texts/text_r.dart';
 import '../../income/pages/add_income_sheet.dart';
 
 class HomeAddButton extends StatelessWidget {
-  const HomeAddButton({super.key, required this.income});
+  const HomeAddButton({super.key, required this.isIncome});
 
-  final bool income;
+  final bool isIncome;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class HomeAddButton extends StatelessWidget {
               isScrollControlled: true,
               useSafeArea: true,
               builder: (context) {
-                return AddIncomeSheet(income: income);
+                return AddIncomeSheet(isIncome: isIncome);
               },
             );
           },
@@ -34,8 +34,9 @@ class HomeAddButton extends StatelessWidget {
           minSize: 40,
           child: Center(
             child: TextR(
-              income ? 'Add Income' : 'Add Expense',
+              isIncome ? 'Add Income' : 'Add Expense',
               fontSize: 16,
+              font: Fonts.interR,
             ),
           ),
         ),

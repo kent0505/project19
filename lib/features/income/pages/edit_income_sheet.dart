@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project19/core/widgets/dialogs/delete_dialog.dart';
 
 import '../../../core/models/test_model.dart';
 import '../../../core/utils.dart';
@@ -12,16 +14,16 @@ import '../bloc/income_bloc.dart';
 import '../widgets/category_tile.dart';
 import '../widgets/sheet_appbar.dart';
 
-class AddIncomeSheet extends StatefulWidget {
-  const AddIncomeSheet({super.key, required this.isIncome});
+class EditIncomeSheet extends StatefulWidget {
+  const EditIncomeSheet({super.key, required this.income});
 
-  final bool isIncome;
+  final Income income;
 
   @override
-  State<AddIncomeSheet> createState() => _AddIncomeSheetState();
+  State<EditIncomeSheet> createState() => _EditIncomeSheetState();
 }
 
-class _AddIncomeSheetState extends State<AddIncomeSheet> {
+class _EditIncomeSheetState extends State<EditIncomeSheet> {
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
@@ -47,19 +49,44 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
     checkActive();
   }
 
-  void onDone() {
+  void onEdit() {
     context.read<IncomeBloc>().add(
-          AddIncomeEvent(
+          EditIncomeEvent(
             income: Income(
-              id: getCurrentTimestamp(),
+              id: widget.income.id,
               title: controller1.text,
               amount: int.tryParse(controller2.text) ?? 0,
               category: controller3.text,
-              isIncome: widget.isIncome,
+              isIncome: widget.income.isIncome,
             ),
           ),
         );
     context.pop();
+  }
+
+  void onDelete() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DeleteDialog(
+          title: widget.income.isIncome ? 'Delete Income?' : 'Delete Expense?',
+          onYes: () {
+            context
+                .read<IncomeBloc>()
+                .add(DeleteIncomeEvent(id: widget.income.id));
+            context.pop();
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller1.text = widget.income.title;
+    controller2.text = widget.income.amount.toString();
+    controller3.text = widget.income.category;
   }
 
   @override
@@ -88,7 +115,10 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
       child: Column(
         children: [
           const SizedBox(height: 14),
-          SheetAppbar(isIncome: widget.isIncome),
+          SheetAppbar(
+            isIncome: widget.income.isIncome,
+            title: 'Edit',
+          ),
           const SizedBox(height: 8),
           Expanded(
             child: ListView(
@@ -114,20 +144,21 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
                 const SizedBox(height: 8),
                 TxtField(
                   controller: controller2,
-                  hintText:
-                      widget.isIncome ? 'Amount Income' : 'Amount Expense',
+                  hintText: widget.income.isIncome
+                      ? 'Amount Income'
+                      : 'Amount Expense',
                   number: true,
                   length: 6,
                   onChanged: checkActive,
                 ),
                 const SizedBox(height: 16),
                 TextM(
-                  widget.isIncome ? 'Category' : 'Expense category',
+                  'Amount (\$)',
                   fontSize: 16,
                   color: AppColors.white40,
                 ),
                 const SizedBox(height: 8),
-                if (widget.isIncome) ...[
+                if (widget.income.isIncome) ...[
                   CategoryTile(
                     id: 1,
                     title: 'Business',
@@ -204,9 +235,14 @@ class _AddIncomeSheetState extends State<AddIncomeSheet> {
                 ],
                 const SizedBox(height: 8),
                 PrimaryButton(
-                  title: 'Done',
+                  title: 'Edit',
                   active: active,
-                  onPressed: onDone,
+                  onPressed: onEdit,
+                ),
+                const SizedBox(height: 8),
+                PrimaryButton(
+                  title: 'Delete',
+                  onPressed: onDelete,
                 ),
                 const SizedBox(height: 32),
               ],

@@ -8,6 +8,7 @@ class AppColors {
   static const Color green = Color(0xff14C886);
   static const Color navbar = Color(0xff485151);
 
+  static Color white8 = white.withOpacity(0.08);
   static Color white14 = white.withOpacity(0.14);
   static Color white50 = const Color(0xffFFFFFF).withOpacity(0.5);
   static Color white40 = const Color(0xffFFFFFF).withOpacity(0.4);

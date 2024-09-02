@@ -5,9 +5,14 @@ import '../../../core/config/app_colors.dart';
 import '../../../core/widgets/texts/text_r.dart';
 
 class SheetAppbar extends StatelessWidget {
-  const SheetAppbar({super.key, required this.income});
+  const SheetAppbar({
+    super.key,
+    required this.isIncome,
+    this.title = 'Add',
+  });
 
-  final bool income;
+  final bool isIncome;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class SheetAppbar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: TextB(
-            income ? 'Add Income' : 'Add Expense',
+            isIncome ? '$title Income' : '$title Expense',
             fontSize: 32,
           ),
         ),

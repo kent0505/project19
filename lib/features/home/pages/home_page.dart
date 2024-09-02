@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils.dart';
 import '../../../core/widgets/custom_scaffold.dart';
+import '../../../core/widgets/no_data.dart';
 import '../../activities/pages/activities_page.dart';
+import '../../income/bloc/income_bloc.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/home_add_button.dart';
+import '../widgets/home_income_card.dart';
 import '../widgets/home_tab_button.dart';
 import '../widgets/nav_bar.dart';
 import '../widgets/statistics_card.dart';
@@ -64,9 +67,9 @@ class _HomeState extends State<_Home> {
           const SizedBox(height: 12),
           const Row(
             children: [
-              HomeAddButton(income: true),
+              HomeAddButton(isIncome: true),
               SizedBox(width: 45),
-              HomeAddButton(income: false),
+              HomeAddButton(isIncome: false),
             ],
           ),
           const SizedBox(height: 20),
@@ -88,6 +91,37 @@ class _HomeState extends State<_Home> {
             ],
           ),
           const SizedBox(height: 16),
+          if (history)
+            BlocBuilder<IncomeBloc, IncomeState>(
+              builder: (context, state) {
+                if (state is IncomeLoadedState) {
+                  if (state.incomes.isEmpty) return const NoData();
+
+                  return Expanded(
+                    child: ListView(
+                      children: [
+                        ...List.generate(
+                          state.incomes.length,
+                          (index) {
+                            return HomeIncomeCard(
+                              income: state.incomes[index],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return Container();
+              },
+            )
+          else
+            Expanded(
+              child: ListView(
+                children: const [],
+              ),
+            ),
         ],
       ),
     );

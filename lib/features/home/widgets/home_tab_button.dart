@@ -36,6 +36,7 @@ class HomeTabButton extends StatelessWidget {
             child: TextR(
               title,
               fontSize: 16,
+              font: Fonts.interR,
               color: active ? AppColors.white : AppColors.white50,
             ),
           ),
