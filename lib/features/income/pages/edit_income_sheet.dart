@@ -28,7 +28,7 @@ class _EditIncomeSheetState extends State<EditIncomeSheet> {
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
 
-  bool active = false;
+  bool active = true;
 
   bool getCat(String cat) {
     return controller3.text == cat;

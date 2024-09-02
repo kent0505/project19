@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'models/test_model.dart';
+
 double navBarHeight = 62;
 
 int getCurrentTimestamp() {
@@ -61,4 +63,18 @@ String getCategoryAsset(String cat) {
   if (cat == 'Rest') return 'assets/cat11.svg';
   if (cat == 'Investment') return 'assets/cat12.svg';
   return 'assets/cat1.svg';
+}
+
+int getAmount(List<Income> incomes, bool isIncome) {
+  int incomeAmount = 0;
+  int expenseAmount = 0;
+  for (Income income in incomes) {
+    if (income.isIncome) {
+      incomeAmount += income.amount;
+    } else {
+      expenseAmount += income.amount;
+    }
+  }
+  if (isIncome) return incomeAmount;
+  return expenseAmount;
 }

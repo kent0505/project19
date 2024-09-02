@@ -6,5 +6,11 @@ class IncomeInitial extends IncomeState {}
 
 class IncomeLoadedState extends IncomeState {
   final List<Income> incomes;
-  IncomeLoadedState({required this.incomes});
+  final int incomeAmount;
+  final int expenseAmount;
+  IncomeLoadedState({
+    required this.incomes,
+    required this.incomeAmount,
+    required this.expenseAmount,
+  });
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/config/app_colors.dart';
 import '../../../core/widgets/texts/text_r.dart';
+import '../../income/bloc/income_bloc.dart';
 
 class StatisticsCard extends StatelessWidget {
   const StatisticsCard({super.key});
@@ -28,63 +30,71 @@ class StatisticsCard extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
             ),
-            const Row(
-              children: [
-                SizedBox(width: 24),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextM(
-                      'Total Portfolio',
-                      fontSize: 16,
-                      font: Fonts.mulishM,
-                    ),
-                    TextB(
-                      '\$10,000',
-                      fontSize: 32,
-                      font: Fonts.mulishB,
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextM(
-                      'Income',
-                      fontSize: 14,
-                      font: Fonts.mulishM,
-                    ),
-                    SizedBox(height: 4),
-                    TextB(
-                      '\$7000',
-                      fontSize: 16,
-                      font: Fonts.mulishB,
-                    ),
-                  ],
-                ),
-                SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextM(
-                      'Expense',
-                      fontSize: 14,
-                      font: Fonts.mulishM,
-                    ),
-                    SizedBox(height: 4),
-                    TextB(
-                      '\$3000',
-                      fontSize: 16,
-                      font: Fonts.mulishB,
-                    ),
-                  ],
-                ),
-                SizedBox(width: 28),
-              ],
+            BlocBuilder<IncomeBloc, IncomeState>(
+              builder: (context, state) {
+                if (state is IncomeLoadedState) {
+                  return Row(
+                    children: [
+                      const SizedBox(width: 24),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextM(
+                            'Total Portfolio',
+                            fontSize: 16,
+                            font: Fonts.mulishM,
+                          ),
+                          TextB(
+                            '\$${state.incomeAmount - state.expenseAmount}',
+                            fontSize: 32,
+                            font: Fonts.mulishB,
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextM(
+                            'Income',
+                            fontSize: 14,
+                            font: Fonts.mulishM,
+                          ),
+                          const SizedBox(height: 4),
+                          TextB(
+                            '\$${state.incomeAmount}',
+                            fontSize: 16,
+                            font: Fonts.mulishB,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 16),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextM(
+                            'Expense',
+                            fontSize: 14,
+                            font: Fonts.mulishM,
+                          ),
+                          const SizedBox(height: 4),
+                          TextB(
+                            '\$${state.expenseAmount}',
+                            fontSize: 16,
+                            font: Fonts.mulishB,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 28),
+                    ],
+                  );
+                }
+
+                return Container();
+              },
             ),
           ],
         ),
