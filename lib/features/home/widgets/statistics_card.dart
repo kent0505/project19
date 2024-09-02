@@ -13,6 +13,7 @@ class StatisticsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 112,
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
         color: AppColors.main,
         borderRadius: BorderRadius.circular(10),

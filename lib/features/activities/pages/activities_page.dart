@@ -93,6 +93,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                           expense: state.expenseAmount,
                           income: state.incomeAmount,
                         ),
+                        const SizedBox(height: 25),
                       ],
                     );
                   }
